@@ -4,8 +4,9 @@
 ⍝ day 1
 ⎕←'Day 1:'
 input←⊃⎕NGET'inputs/day1.txt'1
+n←'zero' 'one' 'two' 'three' 'four' 'five' 'six' 'seven' 'eight' 'nine'
 ⎕←+/⍎⍤1⊢↑((⊣/),(⊢/))¨input∩¨⊂⎕D ⍝ part 1
-⎕←+/((10×⊣/)+(⊢/))¨0~⍨¨((('one'∘⍷¨input)+('1'∘⍷¨input))+(2×(('two'∘⍷¨input)+('2'∘⍷¨input)))+(3×(('three'∘⍷¨input)+('3'∘⍷¨input)))+(4×(('four'∘⍷¨input)+('4'∘⍷¨input)))+(5×(('five'∘⍷¨input)+('5'∘⍷¨input)))+(6×(('six'∘⍷¨input)+('6'∘⍷¨input)))+(7×(('seven'∘⍷¨input)+('7'∘⍷¨input)))+(8×(('eight'∘⍷¨input)+('8'∘⍷¨input)))+(9×(('nine'∘⍷¨input)+('9'∘⍷¨input)))) ⍝ part 2
+⎕←+/((10×⊣/)+(⊢/))¨0~⍨¨{(⍳⍴n)+.×(↑n∘.⍷⊂⍵)+↑⎕D∘.⍷⊂⍵}¨input ⍝ part 2
 
 ⍝ day 2
 ⎕←'Day 2:'
