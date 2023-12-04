@@ -27,3 +27,10 @@ is_adjacent←{(∨/1≥|⍺[1] - ⍵[1] + ⍳⍵[2])∧(1≥|⍺[0]-⍵[0])}
 
 ⎕←+/3⌷¨(∨/⍉symbols ∘.is_adjacent numbers)/numbers ⍝ part 1
 ⎕←+/(2=+/gears ∘.is_adjacent numbers) /  (gears∘.is_adjacent numbers)×.{1⌈⍺×⍵[3]} numbers ⍝ part 2
+
+⍝ day 4
+⎕←'Day 4:'
+input←⊃⎕nget'inputs/day4.txt'1
+num_matches←'Card [ \d]+: ([ 0-9]+) \| ([ 0-9]+)'⎕S{≢↑∩/0~⍨¨{,⎕CSV⍠'Separator' ' '⊢⍵'S'3}¨⍵.(1↓Lengths↑¨Offsets↓¨⊂Block)} input
+⎕←+/2*1-⍨0~⍨num_matches ⍝ part 1
+⎕←+/{⍺←0 ⋄ ⍺=≢⍵:⍵ ⋄ (⍺+1)∇⍵ + (≢⍵)↑∊((⍺+1)⍴0)(num_matches[⍺]⍴⍵[⍺])((≢⍵)⍴0)}(≢num_matches)⍴1 ⍝ part 2
