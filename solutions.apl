@@ -34,3 +34,14 @@ input←⊃⎕nget'inputs/day4.txt'1
 num_matches←'Card [ \d]+: ([ 0-9]+) \| ([ 0-9]+)'⎕S{≢↑∩/0~⍨¨{,⎕CSV⍠'Separator' ' '⊢⍵'S'3}¨⍵.(1↓Lengths↑¨Offsets↓¨⊂Block)} input
 ⎕←+/2*1-⍨0~⍨num_matches ⍝ part 1
 ⎕←+/{⍺←0 ⋄ ⍺=≢⍵:⍵ ⋄ (⍺+1)∇⍵ + (≢⍵)↑∊((⍺+1)⍴0)(num_matches[⍺]⍴⍵[⍺])((≢⍵)⍴0)}(≢num_matches)⍴1 ⍝ part 2
+
+⍝ day 5
+⎕←'Day 5:'
+input←⊃⎕NGET'inputs/day5.txt'1
+p←input⊆⍨,↑×⍴¨input
+seeds←⍎1⊃s⊆⍨~':'⍷s←⊃⊃p
+maps←({(-/)2↑[1]⍵},{1↓[1]⍵})¨{↑⍎¨1↓⍵}¨1↓p
+apply_single_mapping←⊣+(⍴⊣)⍴({⍺∘.≥1⌷[1]⍵}∧{⍺∘.<+/1↓[1]⍵})(+.×){1↑[1]⍵}
+apply_all_mappings ← {⊃apply_single_mapping⍨/(⊖⍵),⊂⍺}
+⎕←⌊/seeds apply_all_mappings maps ⍝ part 1
+batch_size←10000 ⋄ ⎕←⌊/({⍺←⌊/⍬ ⋄ ⍵[1]=0:⍺ ⋄ (⍺⌊⌊/(⍵[0] + ⍳batch_size⌊⍵[1]) apply_all_mappings maps) ∇ (⍵[0] + batch_size⌊⍵[1]) (⍵[1] - batch_size⌊⍵[1])}⍤1) ((2,2÷⍨≢)⍴⊢)seeds ⍝ part 2 - takes about 6 minutes on my machine, but good enough for now :D
