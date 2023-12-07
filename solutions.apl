@@ -45,3 +45,10 @@ apply_single_mapping←⊣+(⍴⊣)⍴({⍺∘.≥1⌷[1]⍵}∧{⍺∘.<+/1↓[
 apply_all_mappings ← {⊃apply_single_mapping⍨/(⊖⍵),⊂⍺}
 ⎕←⌊/seeds apply_all_mappings maps ⍝ part 1
 batch_size←10000 ⋄ ⎕←⌊/({⍺←⌊/⍬ ⋄ ⍵[1]=0:⍺ ⋄ (⍺⌊⌊/(⍵[0] + ⍳batch_size⌊⍵[1]) apply_all_mappings maps) ∇ (⍵[0] + batch_size⌊⍵[1]) (⍵[1] - batch_size⌊⍵[1])}⍤1) ((2,2÷⍨≢)⍴⊢)seeds ⍝ part 2 - takes about 6 minutes on my machine, but good enough for now :D
+
+⍝ day 6
+⎕←'Day 6:'
+input←⊃⎕NGET'inputs/day6.txt'1
+solve←((((⊢×≢-⊢)⍳)¨⊣) (×.((+/,)>)) ⊢)/
+⎕←solve {⍎⊃1↓⍵⊆⍨~':'⍷⍵}¨input
+⎕←solve (⍎{⍵∊⎕D}(/∘⊢)⊢)¨input
