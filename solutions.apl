@@ -2,6 +2,7 @@
 ⎕IO ← 0
 
 I←⌷⍨∘⊃⍨⍤0 99 ⍝ "sane" indexing
+⎕PP←17 ⍝ print integers with up to 17 significant digits without use of scientific notation
 
 ⍝ day 1
 ⎕←'Day 1:'
@@ -67,3 +68,15 @@ type←{⍸(1 1 1 1 1)(2 1 1 1)(2 2 1)(3 1 1)(3 2)(4 1)(5,⍬)⍷⍨,/{⍴¨⍵[
 card_values←'AKQT98765432J'
 type←{⍵≡'JJJJJ': 6 ⋄ ⍸(1 1 1 1 1)(2 1 1 1)(2 2 1)(3 1 1)(3 2)(4 1)(5,⍬)⍷⍨{⊂(5-+/⍵)(+@0)⍵}⊃,/{⍴¨⍵[⍒⍴¨⍵]}{s⊆⍨1,1++\~2 =/ s←'J'~⍨⍵[⍋card_values⍳⍵]}⍵}
 ⎕←solve p
+
+⍝ day 8
+⎕←'Day 8:'
+input←⊃⎕NGET'inputs/day8.txt'1
+instructions←⊃input
+p←↑{0 2 4 I{6⍴⎕CSV⍠'Widths'(3 4 3 2 3 1)⊢⍵'S'1}⍵}¨ 2↓input
+nodes←,1↑[1]p
+L←(⍳⍴nodes) ∘.{nodes[⍺]≡⍵ 1 ⌷p} ⍳⍴nodes
+R←(⍳⍴nodes) ∘.{nodes[⍺]≡⍵ 2 ⌷p} ⍳⍴nodes
+S←(⊃(+.×)/{'R'≡⍵:R ⋄ ⍵≡'L':L}¨⌽instructions)
+⎕←(≢instructions) × {⍺←0 ⋄ ⍵[⍸'ZZZ'∘≡¨nodes]: ⍺ ⋄ ⍺+1 ∇ S+.×⍵}'AAA'∘≡¨nodes                             ⍝ part 1
+⎕←∧/(≢instructions) × {⍺←0 ⋄ 0≡+/⍵[⍸~('Z'∘=⊢/)¨nodes]: ⍺ ⋄ ⍺+1 ∇ S+.×⍵}¨{(⍳≢nodes)=⍵}¨⍸('A'∘=⊢/)¨nodes  ⍝ part 2
