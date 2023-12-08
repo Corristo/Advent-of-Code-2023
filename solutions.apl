@@ -1,6 +1,8 @@
 #!/usr/bin/env dyalogscript
 ⎕IO ← 0
 
+I←⌷⍨∘⊃⍨⍤0 99 ⍝ "sane" indexing
+
 ⍝ day 1
 ⎕←'Day 1:'
 input←⊃⎕NGET'inputs/day1.txt'1
@@ -52,3 +54,16 @@ input←⊃⎕NGET'inputs/day6.txt'1
 solve←((((⊢×≢-⊢)⍳)¨⊣) (×.((+/,)>)) ⊢)/
 ⎕←solve {⍎⊃1↓⍵⊆⍨~':'⍷⍵}¨input
 ⎕←solve (⍎{⍵∊⎕D}(/∘⊢)⊢)¨input
+
+⍝ day 7
+⎕←'Day 7:'
+p←{⎕CSV⍠'Separator' ' '⊢⍵⍬(1 2)}'inputs/day7.txt'
+solve←{+/({1+⍳≢⍵}×⊢) ∊1↓[1](⍋I⊢)(((,type⊃) ⍤1⊢){⍺ (1↓[1]((⍒{(≢card_values)⊥card_values∘⍳⊃⍵}⍤1) I ⊢)⍵)}⌸⊢)⍵}
+⍝ part 1
+card_values←'AKQJT98765432'
+type←{⍸(1 1 1 1 1)(2 1 1 1)(2 2 1)(3 1 1)(3 2)(4 1)(5,⍬)⍷⍨,/{⍴¨⍵[⍒⍴¨⍵]}{s⊆⍨1,1++\~2 =/ s←⍵[⍋card_values⍳⍵]}⍵}
+⎕←solve p
+⍝ part 2
+card_values←'AKQT98765432J'
+type←{⍵≡'JJJJJ': 6 ⋄ ⍸(1 1 1 1 1)(2 1 1 1)(2 2 1)(3 1 1)(3 2)(4 1)(5,⍬)⍷⍨{⊂(5-+/⍵)(+@0)⍵}⊃,/{⍴¨⍵[⍒⍴¨⍵]}{s⊆⍨1,1++\~2 =/ s←'J'~⍨⍵[⍋card_values⍳⍵]}⍵}
+⎕←solve p
