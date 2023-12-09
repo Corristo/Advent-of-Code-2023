@@ -80,3 +80,11 @@ R←(⍳⍴nodes) ∘.{nodes[⍺]≡⍵ 2 ⌷p} ⍳⍴nodes
 S←(⊃(+.×)/{'R'≡⍵:R ⋄ ⍵≡'L':L}¨⌽instructions)
 ⎕←(≢instructions) × {⍺←0 ⋄ ⍵[⍸'ZZZ'∘≡¨nodes]: ⍺ ⋄ ⍺+1 ∇ S+.×⍵}'AAA'∘≡¨nodes                             ⍝ part 1
 ⎕←∧/(≢instructions) × {⍺←0 ⋄ 0≡+/⍵[⍸~('Z'∘=⊢/)¨nodes]: ⍺ ⋄ ⍺+1 ∇ S+.×⍵}¨{(⍳≢nodes)=⍵}¨⍸('A'∘=⊢/)¨nodes  ⍝ part 2
+
+⍝ day 9
+⎕←'Day 9:'
+input←⊃⎕NGET'inputs/day9.txt'1
+p←{⍎('¯'@((⍸'-'∘=)⍵))⍵}¨input
+f←({⍵⍪⊂2-⍨/⊃¯1↑⍵}⍣{∧/0=⊃¯1↑⍺})
+⎕←+/{+/⊢/¨f⊂⍵}¨p ⍝ part 1
+⎕←+/{-/⊣/¨f⊂⍵}¨p ⍝ part 2
